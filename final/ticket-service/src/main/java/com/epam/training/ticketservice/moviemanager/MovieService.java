@@ -5,7 +5,7 @@ import com.epam.training.ticketservice.moviemanager.model.MovieDto;
 import java.util.List;
 import java.util.Optional;
 
-public interface MoveService {
+public interface MovieService {
 
     void createMovie(String title, String genre, int lengthInMinute);
 

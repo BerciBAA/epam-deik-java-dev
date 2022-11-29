@@ -17,7 +17,7 @@ public class CartCommand {
     private final CheckoutService checkoutService;
     private final ProductService productService;
 
-    @ShellMethod(key = "user cart list", value = "List the cart content")
+        @ShellMethod(key = "user cart list", value = "List the cart content")
     public String cartList() {
         if (cart.getProductList().isEmpty()) {
             return "The cart is empty!";

@@ -1,36 +1,40 @@
 package com.epam.training.ticketservice.accountmanager;
 
-import java.util.LinkedList;
-import java.util.List;
+import com.epam.training.ticketservice.accountmanager.model.UserDto;
+import com.epam.training.ticketservice.accountmanager.persistence.User;
+import com.epam.training.ticketservice.accountmanager.persistence.UserRepository;
+import lombok.AllArgsConstructor;
+
 import java.util.Optional;
 
-public class AdminUserServiceImp implements AdminUserService {
+@AllArgsConstructor
+public class  UserServiceImp implements UserService {
 
-    private List<Admin> adminsList;
+    UserRepository userRepository;
 
-    public void initUser() {
-        adminsList = new LinkedList<>(List.of(Admin.createUser("admin", "admin")));
+    @Override
+    public Optional<UserDto> getUserByName(String userName) {
+        Optional<User> dbUser = userRepository.findByUserName(userName);
+        if(dbUser.isEmpty()){
+            return Optional.empty();
+        }
+        UserDto user  = new UserDto(dbUser.get().getUserName(),dbUser.get().isAdmin());
+        return Optional.of(user);
     }
 
     @Override
-    public List<Admin> getUserList() {
-        return adminsList;
+    public void createUser(String userName, String userPassword, boolean isAdmin) {
+        User user = new User(userName,userPassword,isAdmin);
+        userRepository.save(user);
     }
 
     @Override
-    public Optional<Admin> getUserByName(String userName) {
-        return adminsList.stream().filter(admin -> admin.getUserName().equals(userName)).findFirst();
-    }
-
-    @Override
-    public void createUser(String userName, String userPassword) {
-        Admin admin = Admin.createUser(userName, userPassword);
-        adminsList.add(admin);
-    }
-
-    @Override
-    public Optional<Admin> getUser(String userName, String userPassword) {
-        return adminsList.stream().filter(admin -> admin.getUserName().equals(userName)
-                && admin.getUserPassword().equals((userPassword))).findFirst();
+    public Optional<UserDto> getUser(String userName, String userPassword) {
+        Optional<User> dbUser = userRepository.findByUserNameAndUserPassword(userName,userPassword);
+        if(dbUser.isEmpty()){
+            return Optional.empty();
+        }
+        UserDto user  = new UserDto(dbUser.get().getUserName(),dbUser.get().isAdmin());
+        return Optional.of(user);
     }
 }

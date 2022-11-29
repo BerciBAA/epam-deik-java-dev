@@ -1,2 +1,13 @@
-package com.epam.training.ticketservice.command;public class BookingCommand {
+package com.epam.training.ticketservice.command;
+
+import com.epam.training.ticketservice.bookingmanager.BookingService;
+import lombok.AllArgsConstructor;
+import org.springframework.shell.standard.ShellComponent;
+import org.springframework.shell.standard.ShellMethod;
+
+@ShellComponent
+@AllArgsConstructor
+public class BookingCommand {
+
+
 }

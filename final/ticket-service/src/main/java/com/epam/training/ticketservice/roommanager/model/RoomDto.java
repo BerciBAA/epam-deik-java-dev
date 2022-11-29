@@ -1,4 +1,4 @@
-package com.epam.training.ticketservice.roommanager;
+package com.epam.training.ticketservice.roommanager.model;
 
 import lombok.Builder;
 import lombok.Value;
@@ -7,14 +7,14 @@ import java.util.Objects;
 
 @Value
 @Builder
-public class Room {
+public class RoomDto {
 
     String roomName;
     int row;
     int column;
 
-    public static Room createRoom(String roomName, int row, int column) {
-        return Room.builder().roomName(roomName).row(row).column(column).build();
+    public static RoomDto createRoom(String roomName, int row, int column) {
+        return RoomDto.builder().roomName(roomName).row(row).column(column).build();
     }
 
 
@@ -31,7 +31,7 @@ public class Room {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Room room = (Room) o;
+        RoomDto room = (RoomDto) o;
         return Objects.equals(roomName, room.roomName);
     }
 

@@ -1,4 +1,4 @@
-package com.epam.training.ticketservice.screeningmanager;
+package com.epam.training.ticketservice.screeningmanager.model;
 
 import com.epam.training.ticketservice.moviemanager.model.MovieDto;
 import com.epam.training.ticketservice.roommanager.model.RoomDto;
@@ -7,18 +7,19 @@ import lombok.Value;
 import org.joda.time.DateTime;
 
 import java.util.Objects;
+import java.util.Optional;
 
 
 @Builder
 @Value
-public class Screening {
+public class ScreeningDto {
 
     MovieDto movie;
     RoomDto room;
     DateTime date;
 
-    public static Screening createScreening(MovieDto movie, RoomDto room, DateTime date) {
-        return Screening.builder()
+    public static ScreeningDto createScreening(MovieDto movie, RoomDto room, DateTime date) {
+        return ScreeningDto.builder()
                 .movie(movie)
                 .room(room)
                 .date(date)
@@ -45,7 +46,7 @@ public class Screening {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Screening screening = (Screening) o;
+        ScreeningDto screening = (ScreeningDto) o;
         return Objects.equals(movie, screening.movie)
                 && Objects.equals(room, screening.room)
                 && Objects.equals(date, screening.date);

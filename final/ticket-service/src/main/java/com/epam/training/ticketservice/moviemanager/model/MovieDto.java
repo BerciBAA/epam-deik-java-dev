@@ -1,4 +1,4 @@
-package com.epam.training.ticketservice.moviemanager;
+package com.epam.training.ticketservice.moviemanager.model;
 
 import lombok.Builder;
 import lombok.Value;
@@ -7,13 +7,13 @@ import java.util.Objects;
 
 @Builder
 @Value
-public class Movie {
+public class MovieDto {
     String title;
     String genre;
     int lengthInMinutes;
 
-    public static Movie createMovie(String title, String genre, int lengthInMinutes) {
-        return Movie.builder()
+    public static MovieDto createMovie(String title, String genre, int lengthInMinutes) {
+        return MovieDto.builder()
                 .title(title)
                 .genre(genre)
                 .lengthInMinutes(lengthInMinutes)
@@ -36,7 +36,7 @@ public class Movie {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Movie movie = (Movie) o;
+        MovieDto movie = (MovieDto) o;
         return Objects.equals(title, movie.title);
     }
 

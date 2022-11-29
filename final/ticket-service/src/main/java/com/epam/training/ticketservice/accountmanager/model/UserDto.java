@@ -1,4 +1,4 @@
-package com.epam.training.ticketservice.accountmanager;
+package com.epam.training.ticketservice.accountmanager.model;
 
 
 import com.epam.training.ticketservice.bookingmanager.Book;
@@ -9,14 +9,12 @@ import lombok.*;
 @Data
 public class UserDto {
     String userName;
-    String userPassword;
-    boolean isAdmin;
-    Book book;
 
-    public static UserDto createUser(String userName, String userPassword, boolean isAdmin) {
+    boolean isAdmin;
+
+    public static UserDto createUser(String userName, boolean isAdmin) {
         return UserDto.builder()
                 .userName(userName)
-                .userPassword(userPassword)
                 .isAdmin(isAdmin)
                 .build();
     }

@@ -3,12 +3,16 @@ package com.epam.training.ticketservice.accountmanager.persistence;
 
 import java.util.Optional;
 
-import com.epam.training.ticketservice.accountmanager.persistence.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProductRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
-    Optional<User> findByName(String name);
+
+    Optional<User> findByUserNameAndUserPassword(String userName, String userPassword);
+
+    Optional<User> findByUserName(String userName);
 }
