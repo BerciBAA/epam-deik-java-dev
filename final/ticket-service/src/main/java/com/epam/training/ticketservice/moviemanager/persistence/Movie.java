@@ -1,7 +1,9 @@
 package com.epam.training.ticketservice.moviemanager.persistence;
 
 
-import lombok.*;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +14,6 @@ import java.util.Objects;
 @Entity
 @Data
 @NoArgsConstructor
-
 public class Movie {
 
     @GeneratedValue
@@ -23,7 +24,7 @@ public class Movie {
     private String genre;
     private int lengthInMinutes;
 
-    public Movie(String title, String genre, int lengthInMinutes){
+    public Movie(String title, String genre, int lengthInMinutes) {
         this.title = title;
         this.genre = genre;
         this.lengthInMinutes = lengthInMinutes;
@@ -31,8 +32,12 @@ public class Movie {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Movie movie = (Movie) o;
         return Objects.equals(title, movie.title);
     }

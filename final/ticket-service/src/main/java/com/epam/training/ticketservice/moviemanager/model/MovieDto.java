@@ -13,11 +13,7 @@ public class MovieDto {
     int lengthInMinutes;
 
     public static MovieDto createMovie(String title, String genre, int lengthInMinutes) {
-        return MovieDto.builder()
-                .title(title)
-                .genre(genre)
-                .lengthInMinutes(lengthInMinutes)
-                .build();
+        return MovieDto.builder().title(title).genre(genre).lengthInMinutes(lengthInMinutes).build();
     }
 
 

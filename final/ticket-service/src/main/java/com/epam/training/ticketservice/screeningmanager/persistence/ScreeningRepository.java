@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface ScreeningRepository extends JpaRepository<Screening,Integer> {
+public interface ScreeningRepository extends JpaRepository<Screening, Integer> {
 
     Optional<Screening> findByMovieAndRoomAndDate(Movie movie, Room room, String date);
 }

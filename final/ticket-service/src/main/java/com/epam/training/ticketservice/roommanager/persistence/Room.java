@@ -22,7 +22,7 @@ public class Room {
     private int rows;
     private int columns;
 
-    public Room(String roomName, int row, int column){
+    public Room(String roomName, int row, int column) {
         this.roomName = roomName;
         this.rows = row;
         this.columns = column;
@@ -30,8 +30,12 @@ public class Room {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Room room = (Room) o;
         return Objects.equals(roomName, room.roomName);
     }

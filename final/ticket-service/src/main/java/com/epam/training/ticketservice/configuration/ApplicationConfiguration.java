@@ -12,8 +12,10 @@ import com.epam.training.ticketservice.moviemanager.MovieServiceImp;
 import com.epam.training.ticketservice.moviemanager.persistence.MovieRepository;
 import com.epam.training.ticketservice.roommanager.RoomService;
 import com.epam.training.ticketservice.roommanager.RoomServiceImp;
+import com.epam.training.ticketservice.roommanager.persistence.RoomRepository;
 import com.epam.training.ticketservice.screeningmanager.ScreeningService;
 import com.epam.training.ticketservice.screeningmanager.ScreeningServiceImp;
+import com.epam.training.ticketservice.screeningmanager.persistence.ScreeningRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -27,8 +29,8 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    public AccountManager accountManager() {
-        return new AccountManagerImp();
+    public AccountManager accountManager(UserService userService) {
+        return new AccountManagerImp(userService, null);
     }
 
     @Bean
@@ -37,17 +39,21 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    public RoomService roomService() {
-        return new RoomServiceImp();
+    public RoomService roomService(RoomRepository repository) {
+        return new RoomServiceImp(repository);
     }
 
     @Bean
-    public ScreeningService screeningService() {
-        return new ScreeningServiceImp();
+    public ScreeningService screeningService(RoomService roomS,
+                                             MovieService movieS,
+                                             MovieRepository movieRepository, RoomRepository roomRepository,
+                                             ScreeningRepository screeningRepository) {
+
+        return new ScreeningServiceImp(roomS, movieS, movieRepository, roomRepository, screeningRepository);
     }
 
     @Bean
-    public BookingService bookingService(){
+    public BookingService bookingService() {
         return new BookingServiceImp();
     }
 }

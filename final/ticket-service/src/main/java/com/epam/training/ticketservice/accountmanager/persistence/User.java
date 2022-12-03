@@ -1,10 +1,13 @@
 package com.epam.training.ticketservice.accountmanager.persistence;
 
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "Users")
@@ -13,13 +16,13 @@ import java.util.Objects;
 public class User {
 
 
-    @GeneratedValue
-    @Id
-    private Integer id;
     @Column(unique = true)
     String userName;
     String userPassword;
     boolean isAdmin;
+    @GeneratedValue
+    @Id
+    private Integer id;
 
     public User(String userName, String userPassword, boolean isAdmin) {
         this.userName = userName;

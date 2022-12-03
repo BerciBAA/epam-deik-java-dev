@@ -1,19 +1,19 @@
 package com.epam.training.ticketservice.bookingmanager;
 
 import com.epam.training.ticketservice.accountmanager.AccountManager;
-import com.epam.training.ticketservice.accountmanager.model.UserDto;
-import com.epam.training.ticketservice.screeningmanager.model.ScreeningDto;
+import com.epam.training.ticketservice.bookingmanager.model.BookDto;
 import com.epam.training.ticketservice.screeningmanager.ScreeningService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.LinkedList;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 
-public class BookingServiceImp implements BookingService{
+public class BookingServiceImp implements BookingService {
 
-    List<Book> booksList;
+    List<BookDto> booksList;
 
     @Autowired
     ScreeningService screeningService;
@@ -27,10 +27,9 @@ public class BookingServiceImp implements BookingService{
     }
 
     @Override
-    public boolean Booking(String movieTitle, String roomName, String Date, String seats) {
+    public boolean booking(String movieTitle, String roomName, String date, String seats) {
 
-        Optional<UserDto> user = accountManager.getLoggedInUser();
-        //return Pattern.matches("(\d+),(\d+)", seats);
+        List<String> splitStringList = Arrays.stream(seats.split(" ")).collect(Collectors.toList());
         return false;
     }
 

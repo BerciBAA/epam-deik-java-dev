@@ -11,32 +11,27 @@ import com.epam.training.ticketservice.roommanager.persistence.RoomRepository;
 import com.epam.training.ticketservice.screeningmanager.model.ScreeningDto;
 import com.epam.training.ticketservice.screeningmanager.persistence.Screening;
 import com.epam.training.ticketservice.screeningmanager.persistence.ScreeningRepository;
+import lombok.AllArgsConstructor;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
+@AllArgsConstructor
 public class ScreeningServiceImp implements ScreeningService {
 
-    @Autowired
     RoomService roomService;
 
-    @Autowired
     MovieService movieService;
 
-    @Autowired
     MovieRepository movieRepository;
 
-    @Autowired
     RoomRepository roomRepository;
 
-    @Autowired
     ScreeningRepository screeningRepository;
 
     @Override
@@ -59,8 +54,12 @@ public class ScreeningServiceImp implements ScreeningService {
     public void deleteScreening(String movieTitle, String roomName, String strDate) {
         Optional<Movie> movie = movieRepository.findByTitle(movieTitle);
         Optional<Room> room = roomRepository.findByRoomName(roomName);
-        Optional<Screening> screening = screeningRepository.findByMovieAndRoomAndDate(movie.get(),room.get(),strDate);
-        screening.ifPresent(value -> screeningRepository.delete(value));
+        if (movie.isPresent() && room.isPresent()) {
+            Optional<Screening> screening = screeningRepository
+                    .findByMovieAndRoomAndDate(movie.get(), room.get(), strDate);
+            screening.ifPresent(value -> screeningRepository.delete(value));
+        }
+
     }
 
     @Override
@@ -71,7 +70,7 @@ public class ScreeningServiceImp implements ScreeningService {
     }
 
 
-    public String screeningsListToString(){
+    public String screeningsListToString() {
 
         StringBuilder sb = new StringBuilder();
         for (Screening screening :
@@ -91,7 +90,7 @@ public class ScreeningServiceImp implements ScreeningService {
         DateTime date = formatter.parseDateTime(screening.getDate());
 
         //if (movieDto.isPresent() && roomDto.isPresent()){
-            return ScreeningDto.createScreening(movieDto.get() ,roomDto.get(), date);
+        return ScreeningDto.createScreening(movieDto.get(), roomDto.get(), date);
         //}
 
     }
@@ -105,7 +104,7 @@ public class ScreeningServiceImp implements ScreeningService {
         DateTime date = formatter.parseDateTime(strDate);
 
         if (movie.isPresent() && room.isPresent()) {
-            Screening screening = new Screening(movie.get(),room.get(),date.toString("yyyy-MM-dd HH:mm"));
+            Screening screening = new Screening(movie.get(), room.get(), date.toString("yyyy-MM-dd HH:mm"));
             return Optional.of(screening);
         }
         return Optional.empty();
@@ -116,7 +115,8 @@ public class ScreeningServiceImp implements ScreeningService {
     public boolean isOverlapping(ScreeningDto screeningDto, int breakTime) {
 
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
-        DateTime endDate = new DateTime(screeningDto.getDate().plusMinutes(screeningDto.getMovie().getLengthInMinutes()));
+        DateTime endDate = new DateTime(screeningDto.getDate()
+                .plusMinutes(screeningDto.getMovie().getLengthInMinutes()));
         Interval interval = new Interval(screeningDto.getDate(), endDate);
         List<Screening> screeningList = screeningRepository.findAll();
 
@@ -124,10 +124,10 @@ public class ScreeningServiceImp implements ScreeningService {
         for (Screening currentScreening : screeningList) {
 
 
-            DateTime StartDate = formatter.parseDateTime(currentScreening.getDate());
+            DateTime startDate = formatter.parseDateTime(currentScreening.getDate());
             int movieLength = currentScreening.getMovie().getLengthInMinutes();
-            DateTime currentEndDate = StartDate.plusMinutes(movieLength + breakTime);
-            Interval currentInterval = new Interval(StartDate, currentEndDate);
+            DateTime currentEndDate = startDate.plusMinutes(movieLength + breakTime);
+            Interval currentInterval = new Interval(startDate, currentEndDate);
             ScreeningDto currentScreeningDto = convertEntityToDto(currentScreening);
 
             if ((interval.overlaps(currentInterval)

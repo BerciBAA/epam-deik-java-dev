@@ -11,10 +11,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class MovieServiceImpTest {
     private final MovieRepository movieRepository = Mockito.mock(MovieRepository.class);
@@ -48,17 +48,56 @@ class MovieServiceImpTest {
 
     @Test
     void updateMovie() {
+        when(movieRepository.findByTitle(TEST_MOVIE.getTitle())).thenReturn(Optional.ofNullable(TEST_MOVIE));
+        underTest.updateMovie(TEST_MOVIE.getTitle(),TEST_MOVIE.getGenre(),TEST_MOVIE.getLengthInMinutes());
+        verify(movieRepository).findByTitle(TEST_MOVIE.getTitle());
+    }
+    @Test
+    void updateMovie2() {
+
+        when(movieRepository.findByTitle(TEST_MOVIE.getTitle())).thenReturn(Optional.ofNullable(TEST_MOVIE));
+
+        underTest.updateMovie(TEST_MOVIE.getTitle(),TEST_MOVIE.getGenre(),TEST_MOVIE.getLengthInMinutes());
+
+        verify(movieRepository).save(TEST_MOVIE);
+    }
+    @Test
+    void updateMovie3() {
+
+        when(movieRepository.findByTitle("TEST")).thenReturn(Optional.empty());
+
+        underTest.updateMovie("TEST",TEST_MOVIE.getGenre(),TEST_MOVIE.getLengthInMinutes());
+
+        verify(movieRepository,times(0)).save(TEST_MOVIE);
     }
 
     @Test
     void deleteMovieByName() {
+
+        when(movieRepository.findByTitle(TEST_MOVIE.getTitle())).thenReturn(Optional.ofNullable(TEST_MOVIE));
+
+        underTest.deleteMovieByName(TEST_MOVIE.getTitle());
+
+        verify(movieRepository).findByTitle(TEST_MOVIE.getTitle());
     }
+
 
     @Test
     void getMovieByName() {
+        Optional<MovieDto> expected = Optional.empty();
+        Optional<MovieDto> actual = underTest.getMovieByName("Test title");
+        Assertions.assertEquals(expected, actual);
+
+    }
+    @Test
+    void getMovieByName2() {
+
+        Optional<MovieDto> expected = Optional.of(MovieDto.createMovie("Test Movie", "Horror", 120));
+        when(movieRepository.findByTitle("Test Movie")).thenReturn(Optional.ofNullable(TEST_MOVIE));
+
+        Optional<MovieDto> actual = underTest.getMovieByName(TEST_MOVIE.getTitle());
+        Assertions.assertEquals(expected, actual);
+        verify(movieRepository).findByTitle("Test Movie");
     }
 
-    @Test
-    void listMovie() {
-    }
 }

@@ -2,8 +2,8 @@ package com.epam.training.ticketservice.command;
 
 import com.epam.training.ticketservice.accountmanager.AccountManager;
 import com.epam.training.ticketservice.accountmanager.model.UserDto;
-import com.epam.training.ticketservice.screeningmanager.model.ScreeningDto;
 import com.epam.training.ticketservice.screeningmanager.ScreeningService;
+import com.epam.training.ticketservice.screeningmanager.model.ScreeningDto;
 import lombok.AllArgsConstructor;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
@@ -26,11 +26,13 @@ public class ScreeningCommand {
         if (screening.isPresent()) {
 
             if (screeningService.isOverlapping(screening.get(), 0)) {
+
                 return "There is an overlapping screening";
             }
             if (screeningService.isOverlapping(screening.get(), 10)) {
                 return "This would start in the break period after another screening in this room";
             }
+
         }
         return null;
     }
@@ -52,7 +54,7 @@ public class ScreeningCommand {
 
     public Availability isAvailability() {
         Optional<UserDto> user = accountManager.getLoggedInUser();
-        if (user.isPresent()){
+        if (user.isPresent()) {
             if (user.get().isAdmin()) {
                 return Availability.available();
             }

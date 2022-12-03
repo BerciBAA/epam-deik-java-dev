@@ -53,7 +53,7 @@ public class MovieCommand {
 
     public Availability isAvailability() {
         Optional<UserDto> user = accountManager.getLoggedInUser();
-        if (user.isPresent()){
+        if (user.isPresent()) {
             if (user.get().isAdmin()) {
                 return Availability.available();
             }

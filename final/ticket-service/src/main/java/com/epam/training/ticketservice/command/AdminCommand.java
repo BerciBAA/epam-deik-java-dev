@@ -33,11 +33,10 @@ public class AdminCommand {
     public String describeAccount() {
         Optional<UserDto> user = accountManager.describeAccount();
         if (user.isPresent()) {
-            if (user.get().isAdmin()){
+            if (user.get().isAdmin()) {
                 return "Signed in with privileged account " + "'" + user.get().getUserName() + "'";
             }
-            return "Signed in with privileged account " + "'" + user.get().getUserName() + "'" +"USER LÉPETT BE MOST";
-
+            return "Signed in with account " + "'" + user.get().getUserName() + "'";
         }
         return "You are not signed in";
     }
@@ -45,7 +44,7 @@ public class AdminCommand {
     public Availability isAvailability() {
 
         Optional<UserDto> user = accountManager.getLoggedInUser();
-        if (user.isPresent()){
+        if (user.isPresent()) {
             if (user.get().isAdmin()) {
                 return Availability.available();
             }

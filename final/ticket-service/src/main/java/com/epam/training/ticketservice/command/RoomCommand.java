@@ -2,8 +2,8 @@ package com.epam.training.ticketservice.command;
 
 import com.epam.training.ticketservice.accountmanager.AccountManager;
 import com.epam.training.ticketservice.accountmanager.model.UserDto;
-import com.epam.training.ticketservice.roommanager.model.RoomDto;
 import com.epam.training.ticketservice.roommanager.RoomService;
+import com.epam.training.ticketservice.roommanager.model.RoomDto;
 import lombok.AllArgsConstructor;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
@@ -50,7 +50,7 @@ public class RoomCommand {
 
     public Availability isAvailability() {
         Optional<UserDto> user = accountManager.getLoggedInUser();
-        if (user.isPresent()){
+        if (user.isPresent()) {
             if (user.get().isAdmin()) {
                 return Availability.available();
             }

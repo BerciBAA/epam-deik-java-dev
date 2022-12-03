@@ -16,23 +16,23 @@ public class UserCommand {
     AccountManager accountManager;
 
     @ShellMethod(key = "sign up")
-    public void signUp(String userName, String userPassword){
-        accountManager.signUp(userName,userPassword);
+    public void signUp(String userName, String userPassword) {
+        accountManager.signUp(userName, userPassword);
 
     }
 
     @ShellMethod(key = "sign in")
-    public String signIn(String userName, String userPassword){
-        Optional<UserDto> user = accountManager.signInPrivileged(userName,userPassword);
-        if (user.isPresent()){
+    public String signIn(String userName, String userPassword) {
+        Optional<UserDto> user = accountManager.signIn(userName, userPassword);
+        if (user.isPresent()) {
             return "successful login";
         }
-        return null;
+        return "Login failed due to incorrect credentials";
     }
 
-    public Availability isAvailability(){
+    public Availability isAvailability() {
         Optional<UserDto> user = accountManager.getLoggedInUser();
-        if (user.isPresent()){
+        if (user.isPresent()) {
             if (!user.get().isAdmin()) {
                 return Availability.available();
             }

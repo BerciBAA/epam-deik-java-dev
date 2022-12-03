@@ -19,8 +19,8 @@ public class MovieServiceImp implements MovieService {
     @Override
     public void createMovie(String title, String genre, int lengthInMinute) {
         List<Movie> movieList = movieRepository.findAll();
-        Movie movie = new Movie(title,genre,lengthInMinute);
-        if (!movieList.contains(movie)){
+        Movie movie = new Movie(title, genre, lengthInMinute);
+        if (!movieList.contains(movie)) {
             movieRepository.save(movie);
         }
     }
@@ -28,7 +28,7 @@ public class MovieServiceImp implements MovieService {
     @Override
     public void updateMovie(String title, String genre, int lengthInMinute) {
         Optional<Movie> movie = movieRepository.findByTitle(title);
-        if(movie.isPresent()){
+        if (movie.isPresent()) {
             movie.get().setGenre(genre);
             movie.get().setLengthInMinutes(lengthInMinute);
             movieRepository.save(movie.get());
@@ -48,13 +48,11 @@ public class MovieServiceImp implements MovieService {
 
     @Override
     public List<MovieDto> listMovie() {
-        return movieRepository.findAll().stream()
-                .map(this::convertEntityToDto)
-                .collect(Collectors.toList());
+        return movieRepository.findAll().stream().map(this::convertEntityToDto).collect(Collectors.toList());
     }
 
     private MovieDto convertEntityToDto(Movie movie) {
-        return MovieDto.createMovie(movie.getTitle(),movie.getGenre(),movie.getLengthInMinutes());
+        return MovieDto.createMovie(movie.getTitle(), movie.getGenre(), movie.getLengthInMinutes());
     }
 
     private Optional<MovieDto> convertEntityToDto(Optional<Movie> movie) {

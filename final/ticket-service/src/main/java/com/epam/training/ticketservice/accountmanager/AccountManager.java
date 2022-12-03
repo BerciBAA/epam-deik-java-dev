@@ -17,5 +17,4 @@ public interface AccountManager {
 
     Optional<UserDto> signIn(String userName, String userPassword);
 
-
 }

@@ -3,23 +3,23 @@ package com.epam.training.ticketservice.roommanager;
 import com.epam.training.ticketservice.roommanager.model.RoomDto;
 import com.epam.training.ticketservice.roommanager.persistence.Room;
 import com.epam.training.ticketservice.roommanager.persistence.RoomRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 
+@AllArgsConstructor
 public class RoomServiceImp implements RoomService {
 
-    @Autowired
     RoomRepository roomRepository;
 
     @Override
     public void createRoom(String roomName, int row, int column) {
-        Room room = new Room(roomName,row,column);
+        Room room = new Room(roomName, row, column);
         List<Room> roomList = roomRepository.findAll();
-        if(!roomList.contains(room)){
+        if (!roomList.contains(room)) {
             roomRepository.save(room);
         }
     }
@@ -28,7 +28,7 @@ public class RoomServiceImp implements RoomService {
     public void updateRoom(String roomName, int row, int column) {
 
         Optional<Room> room = roomRepository.findByRoomName(roomName);
-        if(room.isPresent()){
+        if (room.isPresent()) {
             room.get().setRows(row);
             room.get().setColumns(column);
             roomRepository.save(room.get());

@@ -1,7 +1,6 @@
 package com.epam.training.ticketservice.roommanager;
 
 import com.epam.training.ticketservice.roommanager.model.RoomDto;
-import com.epam.training.ticketservice.roommanager.persistence.Room;
 
 import java.util.List;
 import java.util.Optional;
