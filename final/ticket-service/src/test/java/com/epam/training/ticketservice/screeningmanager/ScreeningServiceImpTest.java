@@ -55,14 +55,14 @@ class ScreeningServiceImpTest {
 
     private final ScreeningDto TEST_SCREENING_DTO = ScreeningDto.createScreening(TEST_MOVIE_DTO,TEST_ROOM_DTO,dateTime);
     @Test
-    void createScreening() {
+    void testCreateScreeningShoudlCreateScreening() {
         when(screeningRepository.findAll()).thenReturn(List.of(TEST_SCREENING));
         Optional<ScreeningDto> expected = Optional.empty();
         Optional<ScreeningDto> actual = underTest.createScreening("Test Movie", "Test room","2021-03-14 16:00");
         Assertions.assertEquals(expected, actual);
     }
     @Test
-    void createScreening2() {
+    void testCreateScreeningShouldReturnScreeningDTO() {
         when(screeningRepository.findAll()).thenReturn(List.of(TEST_SCREENING));
         when(movieRepository.findByTitle("Test Movie")).thenReturn(Optional.of(TEST_MOVIE));
         when(roomRepository.findByRoomName("Test Room")).thenReturn(Optional.of(TEST_ROOM));
@@ -75,7 +75,7 @@ class ScreeningServiceImpTest {
     }
 
     @Test
-    void deleteScreening() {
+    void testDeleteScreeningByMovieAndRoomAndDate() {
         when(movieRepository.findByTitle("Test Movie")).thenReturn(Optional.of(TEST_MOVIE));
         when(roomRepository.findByRoomName("Test Room")).thenReturn(Optional.of(TEST_ROOM));
         when(screeningRepository.findByMovieAndRoomAndDate(TEST_MOVIE,TEST_ROOM,"2021-03-14 16:00"))
@@ -88,7 +88,7 @@ class ScreeningServiceImpTest {
     }
 
     @Test
-    void deleteScreening2() {
+    void testDeleteScreeningCallFindByTitleAndFIndByRoomName() {
         when(movieRepository.findByTitle("Test Movie")).thenReturn(Optional.empty());
         when(roomRepository.findByRoomName("Test Room")).thenReturn(Optional.empty());
 
@@ -99,7 +99,7 @@ class ScreeningServiceImpTest {
     }
 
     @Test
-    void listScreenings() {
+    void testListScreeningsShouldReturnScreeningDTOList() {
         when(screeningRepository.findAll()).thenReturn(List.of(TEST_SCREENING));
         when(movieRepository.findByTitle("Test Movie")).thenReturn(Optional.of(TEST_MOVIE));
         when(roomRepository.findByRoomName("Test Room")).thenReturn(Optional.of(TEST_ROOM));
@@ -114,7 +114,7 @@ class ScreeningServiceImpTest {
 
 
     @Test
-    void isOverlapping() {
+    void testIsOverlapping() {
         boolean expected = false;
         boolean actual = underTest.isOverlapping(TEST_SCREENING_DTO,0);
         Assertions.assertEquals(expected, actual);

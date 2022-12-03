@@ -1,12 +1,6 @@
 package com.epam.training.ticketservice.accountmanager;
 
 import com.epam.training.ticketservice.accountmanager.model.UserDto;
-import com.epam.training.ticketservice.accountmanager.persistence.User;
-import com.epam.training.ticketservice.moviemanager.MovieServiceImp;
-import com.epam.training.ticketservice.moviemanager.model.MovieDto;
-import com.epam.training.ticketservice.moviemanager.persistence.Movie;
-import com.epam.training.ticketservice.moviemanager.persistence.MovieRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -20,19 +14,14 @@ class AccountManagerImpTest {
     private final AccountManagerImp underTest = new AccountManagerImp(userService,null);
 
     @Test
-    void describeAccount() {
+    void testDescribeAccountShouldReturnUserDTO() {
         Optional<UserDto> actual = underTest.describeAccount();
         assertEquals(Optional.empty(),actual);
     }
 
-    @Test
-    void getLoggedInUser() {
-        Optional<UserDto> actual = underTest.describeAccount();
-        assertEquals(Optional.empty(),actual);
-    }
 
     @Test
-    void signInPrivileged() {
+    void testSignInPrivilegedShouldReturnLoggedInUserWithPrivilege() {
 
         UserDto expected = UserDto.createUser("admin",true);
         when(userService.getUser("admin","admin")).thenReturn(Optional.ofNullable(expected));
@@ -43,6 +32,9 @@ class AccountManagerImpTest {
     }
 
     @Test
-    void signIn() {
+    void testGetLoggedInUserShouldReturnUserDTO() {
+        Optional<UserDto> actual = underTest.describeAccount();
+        assertEquals(Optional.empty(),actual);
     }
+
 }

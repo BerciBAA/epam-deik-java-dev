@@ -17,7 +17,7 @@ class UserServiceImpTest {
     private final UserRepository userRepository = Mockito.mock(UserRepository.class);
     private final UserService underTest = new UserServiceImp(userRepository);
     @Test
-        void getUserByName() {
+        void testGetUserByNameShouldReturnSameUsername() {
         User user = new User("user","pass",true);
         when(userRepository.findByUserName("user")).thenReturn(Optional.of(user));
 
@@ -30,7 +30,7 @@ class UserServiceImpTest {
     }
 
     @Test
-    void getUserByName2() {
+    void testGetUserByNameShouldReturnEmptyUser() {
 
         when(userRepository.findByUserName("user")).thenReturn(Optional.empty());
 
@@ -43,7 +43,7 @@ class UserServiceImpTest {
     }
 
     @Test
-    void createUser() {
+    void testCreateUserShouldCreateUser() {
 
         User user = new User("user","pass",true);
         when(userRepository.save(user)).thenReturn(user);
@@ -52,7 +52,7 @@ class UserServiceImpTest {
     }
 
     @Test
-    void getUser() {
+    void testGetUserShouldReturnUser() {
         User user = new User("user","pass",true);
         when(userRepository.findByUserNameAndUserPassword("user","pass"))
                 .thenReturn(Optional.of(user));
@@ -66,7 +66,7 @@ class UserServiceImpTest {
 
 
     @Test
-    void getUser2() {
+    void testGetUserShouldReturnEmptyUser() {
         when(userRepository.findByUserNameAndUserPassword("user","pass"))
                 .thenReturn(Optional.empty());
 

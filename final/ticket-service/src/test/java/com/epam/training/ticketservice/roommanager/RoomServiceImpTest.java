@@ -23,7 +23,7 @@ class RoomServiceImpTest {
     Room TEST_ROOM = new Room("Test Room",10,10);
     private final RoomDto TEST_ROOM_DTO = RoomDto.createRoom("Test Room",10,10);
     @Test
-    void createRoom() {
+    void testCreateRoom() {
         when(roomRepository.save(TEST_ROOM)).thenReturn(TEST_ROOM);
 
         underTest.createRoom(TEST_ROOM.getRoomName(),TEST_ROOM.getRows(),TEST_ROOM.getColumns());
@@ -31,7 +31,7 @@ class RoomServiceImpTest {
         verify(roomRepository).save(TEST_ROOM);
     }
     @Test
-    void createRoom2() {
+    void testListRoomShouldReturnOneRoom() {
         when(roomRepository.findAll()).thenReturn(List.of(TEST_ROOM));
         List<RoomDto> expected = List.of(TEST_ROOM_DTO);
 
@@ -42,13 +42,13 @@ class RoomServiceImpTest {
     }
 
     @Test
-    void updateRoom() {
+    void testUpdateRoomTestRepositoryFindByTitle() {
         when(roomRepository.findByRoomName(TEST_ROOM.getRoomName())).thenReturn(Optional.ofNullable(TEST_ROOM));
         underTest.updateRoom(TEST_ROOM.getRoomName(),TEST_ROOM.getRows(),TEST_ROOM.getColumns());
         verify(roomRepository).findByRoomName(TEST_ROOM.getRoomName());
     }
     @Test
-    void updateRoom2() {
+    void testUpdateRoomTestRepositorySave() {
         when(roomRepository.findByRoomName(TEST_ROOM.getRoomName())).thenReturn(Optional.ofNullable(TEST_ROOM));
 
         underTest.updateRoom(TEST_ROOM.getRoomName(),TEST_ROOM.getRows(),TEST_ROOM.getColumns());
@@ -56,7 +56,7 @@ class RoomServiceImpTest {
         verify(roomRepository).save(TEST_ROOM);
     }
     @Test
-    void updateRoom3() {
+    void testUpdateRoomTestRepositorySaveZeroTime() {
         when(roomRepository.findByRoomName("TEST")).thenReturn(Optional.empty());
 
         underTest.updateRoom("TEST",TEST_ROOM.getRows(),TEST_ROOM.getColumns());
@@ -65,7 +65,7 @@ class RoomServiceImpTest {
     }
 
     @Test
-    void deleteRoom() {
+    void testDeleteRoomByNameTestMovieRepositoryFindByTitle() {
         when(roomRepository.findByRoomName(TEST_ROOM.getRoomName())).thenReturn(Optional.ofNullable(TEST_ROOM));
 
         underTest.deleteRoom(TEST_ROOM.getRoomName());
@@ -74,7 +74,7 @@ class RoomServiceImpTest {
     }
 
     @Test
-    void getRoomByName() {
+    void testGetRoomByNameShouldReturnRoom() {
 
         Optional<RoomDto> expected = Optional.of(RoomDto.createRoom(TEST_ROOM.getRoomName(),TEST_ROOM.getRows(),TEST_ROOM.getColumns()));
         when(roomRepository.findByRoomName("Test Room")).thenReturn(Optional.ofNullable(TEST_ROOM));

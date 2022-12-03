@@ -23,7 +23,7 @@ class MovieServiceImpTest {
     private final MovieDto TEST_MOVIE_DTO = MovieDto.createMovie("Test Movie", "Horror", 120);
 
     @Test
-    void createMovie() {
+    void testCreateMovie() {
 
         when(movieRepository.save(TEST_MOVIE)).thenReturn(TEST_MOVIE);
 
@@ -34,7 +34,7 @@ class MovieServiceImpTest {
     }
 
     @Test
-    void createMovie2() {
+    void testListMovieShouldReturnOneMovie() {
 
         when(movieRepository.findAll()).thenReturn(List.of(TEST_MOVIE));
         List<MovieDto> expected = List.of(TEST_MOVIE_DTO);
@@ -47,13 +47,13 @@ class MovieServiceImpTest {
     }
 
     @Test
-    void updateMovie() {
+    void testUpdateMovieTestRepositoryFindByTitle() {
         when(movieRepository.findByTitle(TEST_MOVIE.getTitle())).thenReturn(Optional.ofNullable(TEST_MOVIE));
         underTest.updateMovie(TEST_MOVIE.getTitle(),TEST_MOVIE.getGenre(),TEST_MOVIE.getLengthInMinutes());
         verify(movieRepository).findByTitle(TEST_MOVIE.getTitle());
     }
     @Test
-    void updateMovie2() {
+    void testUpdateMovieTestRepositorySave() {
 
         when(movieRepository.findByTitle(TEST_MOVIE.getTitle())).thenReturn(Optional.ofNullable(TEST_MOVIE));
 
@@ -62,7 +62,7 @@ class MovieServiceImpTest {
         verify(movieRepository).save(TEST_MOVIE);
     }
     @Test
-    void updateMovie3() {
+    void testUpdateMovieTestRepositorySaveZeroTime() {
 
         when(movieRepository.findByTitle("TEST")).thenReturn(Optional.empty());
 
@@ -72,7 +72,7 @@ class MovieServiceImpTest {
     }
 
     @Test
-    void deleteMovieByName() {
+    void testDeleteMovieByNameTestMovieRepositoryFindByTitle() {
 
         when(movieRepository.findByTitle(TEST_MOVIE.getTitle())).thenReturn(Optional.ofNullable(TEST_MOVIE));
 
@@ -83,14 +83,14 @@ class MovieServiceImpTest {
 
 
     @Test
-    void getMovieByName() {
+    void testGetMovieByNameShouldReturnMovie() {
         Optional<MovieDto> expected = Optional.empty();
         Optional<MovieDto> actual = underTest.getMovieByName("Test title");
         Assertions.assertEquals(expected, actual);
 
     }
     @Test
-    void getMovieByName2() {
+    void testGetMovieByNameShouldReturnOneMovieByName() {
 
         Optional<MovieDto> expected = Optional.of(MovieDto.createMovie("Test Movie", "Horror", 120));
         when(movieRepository.findByTitle("Test Movie")).thenReturn(Optional.ofNullable(TEST_MOVIE));
